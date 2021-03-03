@@ -24,6 +24,9 @@ public class OuterResponseBodyAdvice extends AbstractResponseBodyAdvice {
      */
     @Override
     public boolean supports(MethodParameter methodParameter, Class aClass) {
+        if (!super.supports(methodParameter,aClass)){
+            return false;
+        }
         IgnoreResponseBodyAdvice ignoreResponseBodyAdvice = methodParameter.getMethodAnnotation(IgnoreResponseBodyAdvice.class);
         if (ignoreResponseBodyAdvice !=null && ignoreResponseBodyAdvice.ignoreOuter()){
             return false;
@@ -56,7 +59,7 @@ public class OuterResponseBodyAdvice extends AbstractResponseBodyAdvice {
         } else {
 
             OuterResponseFailureView responseFailureView = new OuterResponseFailureView();
-            responseFailureView.setCode(1);
+            responseFailureView.setCode(status);
             responseFailureView.setMessage(String.valueOf(o));
 
             // 手动设置返回的http status

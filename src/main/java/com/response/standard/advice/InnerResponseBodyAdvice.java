@@ -23,6 +23,9 @@ public class InnerResponseBodyAdvice extends AbstractResponseBodyAdvice {
      */
     @Override
     public boolean supports(MethodParameter methodParameter, Class aClass) {
+        if (!super.supports(methodParameter,aClass)){
+            return false;
+        }
         IgnoreResponseBodyAdvice ignoreResponseBodyAdvice = methodParameter.getMethodAnnotation(IgnoreResponseBodyAdvice.class);
         if (ignoreResponseBodyAdvice !=null && ignoreResponseBodyAdvice.ignoreInner()){
             return false;
